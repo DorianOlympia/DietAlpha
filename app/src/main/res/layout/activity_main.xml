@@ -1,13 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/back">
+
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/main_toolbar"
+        android:id="@+id/toolbar" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="5dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -65,11 +74,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:text="Powyzszy produkt mozesz zastapic:"
+        android:id="@+id/textView"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginBottom="5dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/productRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9">
+        android:layout_weight="14">
 
     </android.support.v7.widget.RecyclerView>
 
