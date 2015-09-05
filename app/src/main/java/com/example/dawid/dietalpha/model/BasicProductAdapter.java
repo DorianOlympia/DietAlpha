@@ -21,7 +21,7 @@ public class BasicProductAdapter extends RecyclerView.Adapter<BasicProductAdapte
     OnGroupSelectedListener listener;
 
     public interface OnGroupSelectedListener{
-        public void onGroupSelected();
+        public void onItemSelected(String gid);
     }
 
     public BasicProductAdapter(List<JsonData> data, Context c){
@@ -65,7 +65,7 @@ public class BasicProductAdapter extends RecyclerView.Adapter<BasicProductAdapte
 
         @Override
         public void onClick(View v) {
-            listener.onGroupSelected();
+            listener.onItemSelected(mData.get(getPosition()).getGid());
         }
     }
 }

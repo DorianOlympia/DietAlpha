@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import com.example.dawid.dietalpha.model.JSONParser;
 import com.example.dawid.dietalpha.model.BasicProductAdapter;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +38,8 @@ public class SelectProductFragment extends Fragment {
     private List<JsonData> data = Collections.emptyList();
     private BasicProductAdapter mAdapter;
     private RequestType type;
+    private String groupId = "N/A";
+    private TextView searchTitle;
 
     public enum RequestType{
         REQ_GROUPS,
@@ -47,9 +51,10 @@ public class SelectProductFragment extends Fragment {
         type = RequestType.REQ_GROUPS;
     }
 
-    public SelectProductFragment(RequestType x){
+    public SelectProductFragment(RequestType x, String groupId){
         super();
         type = x;
+        this.groupId = groupId;
     }
 
     @Nullable
@@ -64,13 +69,17 @@ public class SelectProductFragment extends Fragment {
         mAdapter = new BasicProductAdapter(data, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
+        searchTitle = (TextView) v.findViewById(R.id.tvSearchTitle);
+
         if(data.isEmpty()) {
             switch(type){
                 case REQ_GROUPS:
                     requestGroups();
+                    searchTitle.setText("Select group of products: ");
                     break;
                 case REQ_PRODUCTS:
                     requestProducts();
+                    searchTitle.setText("Select particular product: ");
                     break;
             }
         }
@@ -80,7 +89,7 @@ public class SelectProductFragment extends Fragment {
     private void requestProducts() {
         Log.d("TAG", "VolleyRequest sent");
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx&max=1500&nutrients=205&fg=1300"
+        JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx&max=1500&nutrients=205&fg=" + groupId
                 , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {

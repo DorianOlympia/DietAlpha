@@ -13,22 +13,28 @@ import com.example.dawid.dietalpha.model.BasicProductAdapter;
  */
 public class SelectProductActivity extends AppCompatActivity implements BasicProductAdapter.OnGroupSelectedListener {
 
+    private SelectProductFragment.RequestType type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_base);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.myLay, new SelectProductFragment(SelectProductFragment.RequestType.REQ_GROUPS));
+        transaction.add(R.id.myLay, new SelectProductFragment());
         transaction.commit();
-
+        type = SelectProductFragment.RequestType.REQ_GROUPS;
     }
 
     @Override
-    public void onGroupSelected() {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.myLay, new SelectProductFragment(SelectProductFragment.RequestType.REQ_PRODUCTS));
-        transaction.addToBackStack(null);
-        transaction.commit();
+    public void onItemSelected(String gid) {
+        if(type.equals(SelectProductFragment.RequestType.REQ_GROUPS)) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.myLay, new SelectProductFragment(SelectProductFragment.RequestType.REQ_PRODUCTS, gid));
+            transaction.addToBackStack(null);
+            transaction.commit();
+            type = SelectProductFragment.RequestType.REQ_PRODUCTS;
+        }else{
+            Toast.makeText(this, "MBID: " + gid, Toast.LENGTH_SHORT).show();
+        }
     }
 }

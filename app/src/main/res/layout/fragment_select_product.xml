@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Select group of products:"
-        android:id="@+id/textView3"
+        android:id="@+id/tvSearchTitle"
         android:gravity="center"
         android:padding="5dp" />
 
