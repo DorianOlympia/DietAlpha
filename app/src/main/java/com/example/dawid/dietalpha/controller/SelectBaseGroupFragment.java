@@ -1,11 +1,13 @@
 package com.example.dawid.dietalpha.controller;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,32 +28,36 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Dawid on 2015-09-04.
+ * Created by Dawid on 2015-09-05.
  */
-public class SelectFood extends AppCompatActivity {
+public class SelectBaseGroupFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private List<GroupJSONData> data = Collections.emptyList();
     private PGroupAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_base);
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_select_base, container, false);
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.groupRecycler);
+        mRecyclerView = (RecyclerView)v.findViewById(R.id.groupRecycler);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         data = new ArrayList<GroupJSONData>();
         for(int i = 0; i < 10; ++i) data.add(new GroupJSONData("name " + i, "GID"));
 
-        mAdapter = new PGroupAdapter(data, this);
+        mAdapter = new PGroupAdapter(data, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx"
                 ,null, new Response.Listener<JSONObject>() {
             @Override
@@ -59,14 +65,14 @@ public class SelectFood extends AppCompatActivity {
                 data = JSONParser.parseGroups(jsonObject);
                 mAdapter.setData(data);
                 mAdapter.notifyDataSetChanged();
-                Toast.makeText(SelectFood.this, "Changes aquired", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(SelectFood.this, "An error occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "An error occured", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(requestJSON);
+        return v;
     }
 }

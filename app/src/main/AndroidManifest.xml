@@ -19,7 +19,7 @@
         </activity>
 
         <activity
-            android:name=".controller.SelectFood"
+            android:name=".controller.SelectBaseActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

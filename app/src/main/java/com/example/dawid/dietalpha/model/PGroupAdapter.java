@@ -2,14 +2,14 @@ package com.example.dawid.dietalpha.model;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dawid.dietalpha.R;
+import com.example.dawid.dietalpha.controller.SelectBaseActivity;
 
 import java.util.List;
 
@@ -22,17 +22,22 @@ public class PGroupAdapter extends RecyclerView.Adapter<PGroupAdapter.ViewHolder
     private Context ctx;
     private final int VIEW_FOOTER = 0;
     private final int VIEW_ITEM = 1;
+    OnGroupSelectedListener listener;
+
+    public interface OnGroupSelectedListener{
+        public void onGroupSelected();
+    }
 
     public PGroupAdapter(List<GroupJSONData> data, Context c){
         mData = data;
         ctx = c;
         inflater = LayoutInflater.from(ctx);
+        listener = (OnGroupSelectedListener)c;
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.basic_list_item, parent, false);
+        View v = inflater.inflate(R.layout.list_item_basic, parent, false);
         ViewHolder res = new ViewHolder(v);
         return res;
     }
@@ -52,13 +57,19 @@ public class PGroupAdapter extends RecyclerView.Adapter<PGroupAdapter.ViewHolder
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name;
 
         public ViewHolder(View itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.tvBasicItemName);
+            itemView.findViewById(R.id.layoutSimpleItem).setOnClickListener(this);
         }
         public void setName(String nm){name.setText(nm);}
+
+        @Override
+        public void onClick(View v) {
+            listener.onGroupSelected();
+        }
     }
 }
