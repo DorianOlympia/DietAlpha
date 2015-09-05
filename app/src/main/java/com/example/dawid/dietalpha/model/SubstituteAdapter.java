@@ -1,8 +1,6 @@
-package com.example.dawid.dietalpha.controller;
+package com.example.dawid.dietalpha.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,23 +10,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.dawid.dietalpha.R;
-import com.example.dawid.dietalpha.model.ItemData;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 /**
  * Created by Dawid on 2015-09-03.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
+public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.ViewHolder> {
     private List<ItemData> mData;
     private LayoutInflater inflater;
     private Context ctx;
     private final int VIEW_FOOTER = 0;
     private final int VIEW_ITEM = 1;
 
-    public MyRecyclerAdapter(List<ItemData> data, Context c){
+    public SubstituteAdapter(List<ItemData> data, Context c){
         mData = data;
         ctx = c;
         inflater = LayoutInflater.from(ctx);
