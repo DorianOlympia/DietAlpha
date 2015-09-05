@@ -6,29 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dawid.dietalpha.R;
-import com.example.dawid.dietalpha.controller.SelectBaseActivity;
 
 import java.util.List;
 
 /**
  * Created by Dawid on 2015-09-04.
  */
-public class PGroupAdapter extends RecyclerView.Adapter<PGroupAdapter.ViewHolder> {
-    private List<GroupJSONData> mData;
+public class BasicProductAdapter extends RecyclerView.Adapter<BasicProductAdapter.ViewHolder> {
+    private List<JsonData> mData;
     private LayoutInflater inflater;
     private Context ctx;
-    private final int VIEW_FOOTER = 0;
-    private final int VIEW_ITEM = 1;
     OnGroupSelectedListener listener;
 
     public interface OnGroupSelectedListener{
         public void onGroupSelected();
     }
 
-    public PGroupAdapter(List<GroupJSONData> data, Context c){
+    public BasicProductAdapter(List<JsonData> data, Context c){
         mData = data;
         ctx = c;
         inflater = LayoutInflater.from(ctx);
@@ -47,7 +43,7 @@ public class PGroupAdapter extends RecyclerView.Adapter<PGroupAdapter.ViewHolder
         holder.setName(mData.get(position).getGname());
     }
 
-    public void setData(List<GroupJSONData> d){
+    public void setData(List<JsonData> d){
         mData = d;
     }
 

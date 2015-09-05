@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_search) {
-            startActivity(new Intent(this, SelectBaseActivity.class));
+            startActivity(new Intent(this, SelectProductActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
