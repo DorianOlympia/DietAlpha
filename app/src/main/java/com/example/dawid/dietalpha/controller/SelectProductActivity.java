@@ -1,6 +1,7 @@
 package com.example.dawid.dietalpha.controller;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -34,7 +35,8 @@ public class SelectProductActivity extends AppCompatActivity implements BasicPro
             transaction.commit();
             type = SelectProductFragment.RequestType.REQ_PRODUCTS;
         }else{
-            Toast.makeText(this, "MBID: " + gid, Toast.LENGTH_SHORT).show();
+            DialogFragment dialog = new ItemAmountDialog();
+            dialog.show(getSupportFragmentManager(), "AMOUNT");
         }
     }
 }

@@ -16,12 +16,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.dawid.dietalpha.R;
 import com.example.dawid.dietalpha.model.JsonData;
 import com.example.dawid.dietalpha.model.JSONParser;
 import com.example.dawid.dietalpha.model.BasicProductAdapter;
+import com.example.dawid.dietalpha.model.VolleySingleton;
 
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -87,8 +89,7 @@ public class SelectProductFragment extends Fragment {
     }
 
     private void requestProducts() {
-        Log.d("TAG", "VolleyRequest sent");
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
         JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx&max=1500&nutrients=205&fg=" + groupId
                 , null, new Response.Listener<JSONObject>() {
             @Override
@@ -107,8 +108,7 @@ public class SelectProductFragment extends Fragment {
     }
 
     private void requestGroups() {
-        Log.d("TAG", "VolleyRequest sent");
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
         JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx"
                 , null, new Response.Listener<JSONObject>() {
             @Override
