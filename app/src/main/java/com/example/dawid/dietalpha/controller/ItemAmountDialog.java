@@ -1,7 +1,9 @@
 package com.example.dawid.dietalpha.controller;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -22,6 +24,18 @@ import org.w3c.dom.Text;
 public class ItemAmountDialog extends DialogFragment {
     private SeekBar amount;
     private TextView tvAmount;
+    NoticeDialogListener mListener;
+
+    public interface NoticeDialogListener {
+        public void onDialogPositiveClick(int amount);
+        public void onDialogNegativeClick();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (NoticeDialogListener) activity;
+    }
 
     @NonNull
     @Override
@@ -50,17 +64,18 @@ public class ItemAmountDialog extends DialogFragment {
         });
 
 
+
         builder.setPositiveButton("Zatwierdz", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d("TAG", "POSITIVE BUTTON CLICKED");
+                mListener.onDialogPositiveClick(amount.getProgress() * 5);
             }
         });
 
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d("TAG", "NEGATIVE BUTTON CLICKED");
+                mListener.onDialogNegativeClick();
             }
         });
 

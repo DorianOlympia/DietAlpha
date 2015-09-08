@@ -1,5 +1,6 @@
 package com.example.dawid.dietalpha.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,9 +13,10 @@ import com.example.dawid.dietalpha.model.BasicProductAdapter;
 /**
  * Created by Dawid on 2015-09-04.
  */
-public class SelectProductActivity extends AppCompatActivity implements BasicProductAdapter.OnGroupSelectedListener {
+public class SelectProductActivity extends AppCompatActivity implements BasicProductAdapter.OnGroupSelectedListener, ItemAmountDialog.NoticeDialogListener {
 
     private SelectProductFragment.RequestType type;
+    private String gid = "N/A";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,23 @@ public class SelectProductActivity extends AppCompatActivity implements BasicPro
         }else{
             DialogFragment dialog = new ItemAmountDialog();
             dialog.show(getSupportFragmentManager(), "AMOUNT");
+            this.gid = gid;
         }
     }
+
+    @Override
+    public void onDialogPositiveClick(int amount) {
+        Toast.makeText(this, "ID: " + gid + " amount: " + amount, Toast.LENGTH_SHORT).show();
+        Intent res = getIntent();
+        res.putExtra("id", gid);
+        res.putExtra("amount", amount);
+        setResult(RESULT_OK, res);
+        finish();
+    }
+
+    @Override
+    public void onDialogNegativeClick() {
+        Toast.makeText(this, "Cancel button clicked", Toast.LENGTH_SHORT).show();
+    }
+
 }
