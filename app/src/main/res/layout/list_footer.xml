@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:background="@color/footer_color"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:id="@+id/layFooter">
 
         <ImageButton
             android:id="@+id/ibAdd"

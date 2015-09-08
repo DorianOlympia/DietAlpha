@@ -5,26 +5,11 @@ package com.example.dawid.dietalpha.model;
  */
 public class ItemData {
     private String name;
-    private String weigth;
-    private String carbo;
-    private String fat;
-    private String cal;
-
-    public ItemData(String name, String weigth, String carbo, String fat, String cal) {
-        this.name = name;
-        this.weigth = weigth;
-        this.carbo = carbo;
-        this.fat = fat;
-        this.cal = cal;
-    }
-
-    public String getCal() {
-        return cal;
-    }
-
-    public void setCal(String cal) {
-        this.cal = cal;
-    }
+    private float weigth;
+    private float carbo;
+    private float fat;
+    private float cal;
+    private float pro;
 
     public String getName() {
         return name;
@@ -34,27 +19,54 @@ public class ItemData {
         this.name = name;
     }
 
-    public String getWeigth() {
+    public float getWeigth() {
         return weigth;
     }
 
-    public void setWeigth(String weigth) {
+    public void setWeigth(float weigth) {
         this.weigth = weigth;
     }
 
-    public String getCarbo() {
+    public float getCarbo() {
         return carbo;
     }
 
-    public void setCarbo(String carbo) {
+    public void setCarbo(float carbo) {
         this.carbo = carbo;
     }
 
-    public String getFat() {
+    public float getFat() {
         return fat;
     }
 
-    public void setFat(String fat) {
+    public void setFat(float fat) {
         this.fat = fat;
     }
+
+    public float getPro() {
+        return pro;
+    }
+
+    public void setPro(float pro) {
+        this.pro = pro;
+    }
+
+    public float getCal() {
+        return cal;
+    }
+
+    public void setCal(float cal) {
+        this.cal = cal;
+    }
+
+    public ItemData(String name, float weigth, float carbo, float fat, float cal, float pro) {
+        this.name = name;
+        this.weigth = weigth;
+        this.carbo = carbo;
+        this.fat = fat;
+        this.cal = cal;
+        this.pro = pro;
+    }
+
+
 }

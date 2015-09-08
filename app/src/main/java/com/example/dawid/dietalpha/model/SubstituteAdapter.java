@@ -22,11 +22,17 @@ public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.Vi
     private Context ctx;
     private final int VIEW_FOOTER = 0;
     private final int VIEW_ITEM = 1;
+    private OnAddButtonClickedListener mListener;
+
+    public interface OnAddButtonClickedListener{
+        void onAddNewItemButtonClicked();
+    }
 
     public SubstituteAdapter(List<ItemData> data, Context c){
         mData = data;
         ctx = c;
         inflater = LayoutInflater.from(ctx);
+        mListener = (OnAddButtonClickedListener) ctx;
     }
 
     @Override
@@ -55,10 +61,10 @@ public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.Vi
             ItemData tmp = mData.get(position);
             Log.d("TAG", tmp.getName());
             holder.setName(tmp.getName());
-            holder.setCarbo(tmp.getCarbo());
-            holder.setFat(tmp.getFat());
-            holder.setWeigth(tmp.getWeigth());
-            holder.setCal(tmp.getCal());
+            holder.setCarbo(String.valueOf(tmp.getCarbo()));
+            holder.setFat(String.valueOf(tmp.getFat()));
+            holder.setWeigth(String.valueOf(tmp.getWeigth()));
+            holder.setCal(String.valueOf(tmp.getCal()));
         }
     }
 
@@ -88,6 +94,12 @@ public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.Vi
                 cal = (TextView) itemView.findViewById(R.id.tvCal);
             } else {
                 ibAdd = (ImageButton) itemView.findViewById(R.id.ibAdd);
+                itemView.findViewById(R.id.layFooter).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onAddNewItemButtonClicked();
+                    }
+                });
             }
         }
 

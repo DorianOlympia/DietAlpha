@@ -49,4 +49,23 @@ public class JSONParser {
         }
         return res;
     }
+
+    public static ItemData parseNutrients(JSONObject response, float weigth){
+        try {
+            String nm = response.getJSONObject(KEY_REPORT).getJSONArray(KEY_FOODS).getJSONObject(0).getString("name");
+            float pro;
+            float car;
+            float fat;
+            float cal;
+            JSONArray nutrients = response.getJSONObject(KEY_REPORT).getJSONArray(KEY_FOODS).getJSONObject(0).getJSONArray("nutrients");
+            pro = (weigth/100f)*(float)nutrients.getJSONObject(0).getDouble("gm");
+            fat = (weigth/100f)*(float)nutrients.getJSONObject(1).getDouble("gm");
+            car = (weigth/100f)*(float)nutrients.getJSONObject(2).getDouble("gm");
+            cal = (weigth/100f)*(float)nutrients.getJSONObject(3).getDouble("gm");
+            return new ItemData(nm, weigth, car, fat, cal, pro);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new ItemData("N/A", -1, -1, -1, -1, -1);
+    }
 }

@@ -37,7 +37,7 @@ public class MainFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ArrayList<ItemData> data = new ArrayList<>();
         for(int i = 0; i < 3; ++i){
-            data.add(new ItemData("Nazwa " + i, "Waga: 9999 g", "Wegle: 9999 g", "Tluszcz: 9999 g", "9999 kcal"));
+            data.add(new ItemData("Nazwa " + i, 999, 999, 999, 999, 999));
         }
         mRecyclerView.setAdapter(new SubstituteAdapter(data,getActivity()));
 
