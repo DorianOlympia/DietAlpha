@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.dawid.dietalpha.R;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,16 +62,20 @@ public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.Vi
             ItemData tmp = mData.get(position);
             Log.d("TAG", tmp.getName());
             holder.setName(tmp.getName());
-            holder.setCarbo(String.valueOf(tmp.getCarbo()));
-            holder.setFat(String.valueOf(tmp.getFat()));
-            holder.setWeigth(String.valueOf(tmp.getWeigth()));
-            holder.setCal(String.valueOf(tmp.getCal()));
+            holder.setCarbo("wegle: " + String.valueOf(String.format("%.2f", tmp.getCarbo())) + "g");
+            holder.setFat("tluszcze: " + String.valueOf(String.format("%.2f", tmp.getFat())) + "g");
+            holder.setWeigth("ilosc: " + String.valueOf(String.format("%.2f", tmp.getWeigth())) + "g");
+            holder.setCal("kalorie: " + String.valueOf(String.format("%.2f", tmp.getCal())) + "g");
         }
     }
 
     @Override
     public int getItemCount() {
         return mData.size() + 1;
+    }
+
+    public void setData(List<ItemData> data){
+        mData = data;
     }
 
 
@@ -122,5 +127,7 @@ public class SubstituteAdapter extends RecyclerView.Adapter<SubstituteAdapter.Vi
         public void setCarbo(String carbo) {
             if(this.carbo != null)this.carbo.setText(carbo);
         }
+
+
     }
 }

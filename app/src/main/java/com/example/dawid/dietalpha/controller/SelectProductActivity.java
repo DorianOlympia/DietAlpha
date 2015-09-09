@@ -36,16 +36,18 @@ public class SelectProductActivity extends AppCompatActivity implements BasicPro
             transaction.addToBackStack(null);
             transaction.commit();
             type = SelectProductFragment.RequestType.REQ_PRODUCTS;
-        }else{
+        }else if(MainActivity.getCurrentPick() == MainActivity.PICK_BASE){
             DialogFragment dialog = new ItemAmountDialog();
             dialog.show(getSupportFragmentManager(), "AMOUNT");
             this.gid = gid;
+        }else{
+            this.gid = gid;
+            onDialogPositiveClick(100);
         }
     }
 
     @Override
     public void onDialogPositiveClick(int amount) {
-        Toast.makeText(this, "ID: " + gid + " amount: " + amount, Toast.LENGTH_SHORT).show();
         Intent res = getIntent();
         res.putExtra("id", gid);
         res.putExtra("amount", amount);

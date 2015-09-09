@@ -26,7 +26,6 @@ import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity implements SubstituteAdapter.OnAddButtonClickedListener {
-
     public static final int PICK_BASE = 1;
     public static final int PICK_COUN = 2;
     private Toolbar tbr;
@@ -38,10 +37,18 @@ public class MainActivity extends AppCompatActivity implements SubstituteAdapter
     private TextView tvBaseFat;
     private TextView tvBaseCar;
 
+    private static int currentPick;
+
+    private ItemData baseProduct;
+
+    private MainFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        baseProduct = null;
 
         //BASE VIEW
         tvBaseName = (TextView)findViewById(R.id.tvBaseName);
@@ -56,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements SubstituteAdapter
         tbr = (Toolbar)findViewById(R.id.toolbar);
         tbr.setTitle("Wyszukaj produkt bazowy: ");
         setSupportActionBar(tbr);
+
+        fragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.mainFragment);
     }
 
     @Override
@@ -67,16 +76,26 @@ public class MainActivity extends AppCompatActivity implements SubstituteAdapter
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_search) {
+            currentPick = PICK_BASE;
+            fragment.clearData();
             startActivityForResult(new Intent(this, SelectProductActivity.class), PICK_BASE);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onAddNewItemButtonClicked() {
+        if(baseProduct != null) {
+            currentPick = PICK_COUN;
+            startActivityForResult(new Intent(this, SelectProductActivity.class), PICK_COUN);
+        }else{
+            Toast.makeText(this, "Wybierz produkt bazowy", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
         if (requestCode == MainActivity.PICK_BASE) {
             Log.d("SUCCESS", "CODE OK");
             if (resultCode == RESULT_OK) {
@@ -95,6 +114,28 @@ public class MainActivity extends AppCompatActivity implements SubstituteAdapter
                         tvBaseFat.setText("tluszcze: " + String.format("%.2f", res.getFat()) + "g");
                         tvBasePro.setText("proteiny: " + String.format("%.2f", res.getPro()) + "g");
                         tvBaseAmount.setText(res.getWeigth() + "g");
+                        baseProduct = res;
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(MainActivity.this, "An error occured", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                requestQueue.add(requestJSON);
+            }
+        }else if(requestCode == MainActivity.PICK_COUN){
+            if (resultCode == RESULT_OK){
+                String id = data.getStringExtra("id");
+                final int weigth = data.getIntExtra("amount", -1);
+                RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+                JsonObjectRequest requestJSON = new JsonObjectRequest(Request.Method.GET, "http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=fV2CXoFnfQ2x6eZCwIEinskdRaiPmj8WpqtjPKIx&nutrients=203&nutrients=204&nutrients=205&nutrients=208&ndbno="+id
+                        , null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        ItemData res = JSONParser.parseNutrients(jsonObject, weigth);
+                        res.setAmountToFulfilProteins(baseProduct.getPro());
+                        fragment.addData(res);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -106,9 +147,5 @@ public class MainActivity extends AppCompatActivity implements SubstituteAdapter
             }
         }
     }
-
-    @Override
-    public void onAddNewItemButtonClicked() {
-        Toast.makeText(this, "Adding new item", Toast.LENGTH_SHORT).show();
-    }
+    public static int getCurrentPick(){return currentPick;}
 }

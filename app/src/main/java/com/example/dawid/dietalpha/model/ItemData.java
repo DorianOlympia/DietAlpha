@@ -68,5 +68,13 @@ public class ItemData {
         this.pro = pro;
     }
 
+    public void setAmountToFulfilProteins(float proteins){
+        float k = proteins/pro;
+        pro = proteins;
+        carbo *= k;
+        weigth *= k;
+        cal *= k;
+        fat *= k;
 
+    }
 }

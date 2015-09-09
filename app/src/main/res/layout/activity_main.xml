@@ -54,21 +54,24 @@
                 android:layout_height="wrap_content"
                 android:text="Białko: XXX g"
                 android:id="@+id/tvBasePro"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="left|right" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvBaseCar"
                 android:text="Węgle: XXX g"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Tłuszcze: XXX g"
                 android:id="@+id/tvBaseFat"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="right" />
         </LinearLayout>
     </LinearLayout>
 
