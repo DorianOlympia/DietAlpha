@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:padding="5dp"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/imageView"
+        android:padding="3dp"
+        android:src="@drawable/splash_image"
+        android:layout_weight="4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Aplikacja stworzona przez: Dawid Dański we współpracy z dietetykiem Magdaleną Wieczorek. Aplikacja wykorzystuje bazę danych National Nutrient Database. Ikony stworzone przez: SimpleIcon &amp; catalin fertu"
+        android:id="@+id/tvSplash"
+        android:layout_weight="1" />
+
+</LinearLayout>
